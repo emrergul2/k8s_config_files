@@ -18,11 +18,20 @@ spec:
         image: gcr.io/google-samples/microservices-demo/cartservice:v0.6.0
         resources:
           limits:
-            memory: "200Mi"
-            cpu: "500m"
-          requests:
             memory: "128Mi"
-            cpu: "300m"
+            cpu: "200m"
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+        readinessProbe:
+          initialDelaySeconds: 15
+          exec:
+            command: ["/bin/grpc_health_probe", "-addr=:7070", "-rpc-timeout=5s"]
+        livenessProbe:
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          exec:
+            command: ["/bin/grpc_health_probe", "-addr=:7070", "-rpc-timeout=5s"]
         ports:
         - containerPort: 7070
         env:

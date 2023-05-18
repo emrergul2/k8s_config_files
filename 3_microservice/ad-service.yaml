@@ -18,11 +18,23 @@ spec:
         image: gcr.io/google-samples/microservices-demo/adservice:v0.6.0
         resources:
           limits:
-            memory: "200Mi"
-            cpu: "500m"
-          requests:
             memory: "128Mi"
-            cpu: "300m"
+            cpu: "200m"
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+        readinessProbe:
+          initialDelaySeconds: 20
+          periodSeconds: 15
+          exec:
+            command: ["/bin/grpc_health_probe", "-addr=:9555"]
+        livenessProbe:
+          initialDelaySeconds: 20
+          periodSeconds: 15
+          exec:
+            command: ["/bin/grpc_health_probe", "-addr=:9555"]
+
+
         ports:
         - containerPort: 9555
         env:

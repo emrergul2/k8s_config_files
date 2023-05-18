@@ -18,11 +18,11 @@ spec:
         image: redis:alpine
         resources:
           limits:
-            memory: "200Mi"
-            cpu: "500m"
-          requests:
             memory: "128Mi"
-            cpu: "300m"
+            cpu: "200m"
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
         ports:
         - containerPort: 6379
 ---

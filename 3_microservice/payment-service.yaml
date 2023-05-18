@@ -18,13 +18,21 @@ spec:
         image: gcr.io/google-samples/microservices-demo/paymentservice:v0.6.0
         resources:
           limits:
-            memory: "200Mi"
-            cpu: "500m"
-          requests:
             memory: "128Mi"
-            cpu: "300m"
+            cpu: "200m"
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
         ports:
         - containerPort: 50051
+        livenessProbe:
+          periodSeconds: 5
+          exec:
+            command: ["/bin/grpc_health_probe","-addr=:50051"]
+        readinessProbe:
+          periodSeconds: 5
+          exec:
+            command: ["/bin/grpc_health_probe","-addr=:50051"]
         env:
         - name: PORT
           value: "50051"
